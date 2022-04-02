@@ -4,7 +4,7 @@ using namespace std;
 namespace zich{
     class Matrix{
 
-        private: 
+        private:
         vector<vector<double> > matrix;
         int rows;
         int cols;
@@ -16,7 +16,7 @@ namespace zich{
         Matrix operator+= (double num);
         Matrix operator+ ();
         Matrix operator- (Matrix &m);
-        Matrix operator-= (Matrix &m);
+        Matrix operator-= (double num);
         Matrix operator- ();
         bool operator>(Matrix &m);
         bool operator>=(Matrix &m);
@@ -27,9 +27,9 @@ namespace zich{
         // friend Matrix operator- (Matrix &m, int num);
         // friend Matrix operator+ (Matrix &m, int num);
         Matrix operator++ ();
-        Matrix operator++ (int num);
+        Matrix operator++ (int);
         Matrix operator-- ();
-        Matrix operator-- (int num); 
+        Matrix operator-- (int); 
         friend Matrix operator*(double num, Matrix &m);
         Matrix operator*(Matrix &m);
         Matrix operator*=(double num);
@@ -37,6 +37,12 @@ namespace zich{
         friend istream& operator>>(istream& input, Matrix &m);
         
         friend ostream& operator<<(ostream& output, const Matrix &m){
+             for(int i = 0; i < m.rows; i++){
+                for(int j = 0; j < m.cols; j++){
+                    output << m.matrix[i][j];          
+        }
+        cout << endl;
+    }
          return output;
         }
 
@@ -44,7 +50,18 @@ namespace zich{
         return Matrix();
     }
 
+    int getRows(){
+        return rows;
+    }
+
+     int getCols(){
+        return cols;
+    }
      
+     vector<vector<double> > getMat(){
+         return matrix;
+     }
+
     };
 
      
