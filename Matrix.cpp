@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <cstdlib>
 using namespace zich;
 using namespace std;
 
@@ -24,6 +25,8 @@ Matrix::Matrix(vector<double> v, int rows, int cols){
     this->rows = rows;
     this->cols = cols;
 }
+
+
 
 vector<double> convert_to_vector(vector<vector<double> > matrix , int rows, int cols){
       vector<double> v;
@@ -57,7 +60,17 @@ bool check_eq(Matrix &m1, Matrix &m2){
  return true;
 }
 
+bool check_sizes(Matrix &m1, Matrix &m2){
+    if(m1.getCols() != m2.getCols() || m1.getRows() != m2.getRows()){
+        return false;
+    }
+    return true;
+}
+
 Matrix Matrix::operator+(Matrix &m){
+    if(!check_sizes(*this, m)){
+        throw std::invalid_argument("Must be same dimensions");
+    }
     vector<vector<double> > copy_matrix = matrix;
     for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
@@ -77,9 +90,16 @@ Matrix Matrix::operator+=(double num){
 }
 
 
-Matrix Matrix::operator+(){ //unary plus
-    return Matrix(); 
-                    
+Matrix Matrix::operator+(){ //unary plus????
+   for(int i = 0; i < this->rows; i++){
+        for(int j = 0; j < this->cols; j++){
+            if(this->matrix[i][j] == 0){
+                continue;
+            }
+           this->matrix[i][j] = abs(this->matrix[i][j]);
+        }
+      }
+      return *this;
 }
 
 Matrix operator+ (Matrix &m, int num){ //regular number addition
@@ -87,6 +107,9 @@ Matrix operator+ (Matrix &m, int num){ //regular number addition
 }
 
 Matrix Matrix::operator- (Matrix &m){
+      if(!check_sizes(*this, m)){
+        throw std::invalid_argument("Must be same dimensions");
+    }
     vector<vector<double> > copy_matrix = matrix;
     for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
@@ -105,6 +128,18 @@ Matrix Matrix::operator-= (double num){
 }
 Matrix operator- (Matrix &m, int num){ //regular number substraction
     return Matrix();
+}
+
+Matrix Matrix::operator- (){ //unary minus
+      for(int i = 0; i < this->rows; i++){
+        for(int j = 0; j < this->cols; j++){
+            if(this->matrix[i][j] == 0){
+                continue;
+            }
+            this->matrix[i][j] *= -1;
+        }
+      }
+      return *this;
 }
 
 bool Matrix::operator>(Matrix &m){
@@ -147,9 +182,6 @@ bool Matrix::operator!=(Matrix &m){
     return !check_eq(*this, m); 
 }
 
-Matrix Matrix::operator- (){
-    return Matrix();
-}
 
 Matrix Matrix::operator++ (){
      for(int i = 0; i < this->rows; i++){
@@ -188,10 +220,28 @@ return temp;
 }
 
 Matrix Matrix::operator*(Matrix &m){
-    return Matrix();
+    if(cols != m.rows){
+        throw std::invalid_argument("Cols and Rows must be the same"); 
+    }
+    vector<double> v (m.cols, 0);
+    Matrix result(v, rows, m.cols);
+    for(int i = 0; i < rows; i++){
+        for(int j = 0; j < m.cols; j++){
+            result.matrix[i][j] = 0;
+            for(int k = 0; k < m.rows; k++){
+                 result.matrix[i][j] += matrix[i][k] * m.matrix[k][j];
+            }
+        }
+    }
+    return result;
 }
 Matrix Matrix::operator*=(double num){
-    return Matrix();
+    for(int i = 0; i < this->rows; i++){
+        for(int j = 0; j < this->cols; j++){
+            this->matrix[i][j] *= num;
+        }
+    }
+    return *this;
 }
  
 // istream& operator>>(istream  &input, Matrix &m){
@@ -201,11 +251,13 @@ Matrix Matrix::operator*=(double num){
 int main(){
     int arr1[] = {1, 0, 0, 0, 1, 0, 0, 0, 1};
     int arr2[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
+    int arr3[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
     vector<double> v1(arr1, arr1+9);
-    std::vector<double> v2(arr2, arr2 + 9);
+    vector<double> v2(arr2, arr2 + 9);
+    vector<double> v3(arr3, arr3 + 9);
     Matrix a(v1, 3 , 3);
     Matrix b(v2, 3 , 3);
-    bool y = b != a;
-    cout << a++;
+    Matrix c(v3, 1, 9);
+    cout << a;
     return 0;
 }

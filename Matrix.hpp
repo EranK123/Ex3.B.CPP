@@ -10,6 +10,7 @@ namespace zich{
         int cols;
 
         public:
+        // vector<double> convert_to_vector(vector<vector<double> > matrix , int rows, int cols);
         Matrix();
         Matrix(vector<double> v, int rows, int cols);
         Matrix operator+ (Matrix &m);
@@ -38,17 +39,24 @@ namespace zich{
         
         friend ostream& operator<<(ostream& output, const Matrix &m){
              for(int i = 0; i < m.rows; i++){
+                 output << "[";
                 for(int j = 0; j < m.cols; j++){
-                    output << m.matrix[i][j];          
+                    output << m.matrix[i][j];         
         }
-        cout << endl;
+        cout << "]" << endl;
     }
          return output;
         }
 
-        friend Matrix operator*(double num, Matrix &m){
-        return Matrix();
-    }
+    //     friend Matrix operator*(double num, Matrix &m){
+    //     vector<vector<double> > copy_matrix = m.matrix;
+    //     for(int i = 0; i < m.rows; i++){
+    //     for(int j = 0; j < m.cols; j++){
+    //         copy_matrix[i][j] *= num;
+    //     }
+    // }
+    // return Matrix(convert_to_vector(copy_matrix, m.rows, m.cols), m.rows, m.cols);
+    // }
 
     int getRows(){
         return rows;
