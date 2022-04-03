@@ -91,15 +91,16 @@ Matrix Matrix::operator+=(double num){
 
 
 Matrix Matrix::operator+(){ //unary plus????
-   for(int i = 0; i < this->rows; i++){
-        for(int j = 0; j < this->cols; j++){
-            if(this->matrix[i][j] == 0){
+    vector<vector<double> > copy_matrix = matrix;
+   for(int i = 0; i < rows; i++){
+        for(int j = 0; j < cols; j++){
+            if(copy_matrix[i][j] == 0){
                 continue;
             }
-           this->matrix[i][j] = abs(this->matrix[i][j]);
+           copy_matrix[i][j] = abs(copy_matrix[i][j]);
         }
       }
-      return *this;
+     return Matrix(convert_to_vector(copy_matrix, rows, cols), rows, cols);
 }
 
 Matrix operator+ (Matrix &m, int num){ //regular number addition
@@ -131,15 +132,16 @@ Matrix operator- (Matrix &m, int num){ //regular number substraction
 }
 
 Matrix Matrix::operator- (){ //unary minus
-      for(int i = 0; i < this->rows; i++){
-        for(int j = 0; j < this->cols; j++){
-            if(this->matrix[i][j] == 0){
+    vector<vector<double> > copy_matrix = matrix;
+      for(int i = 0; i < rows; i++){
+        for(int j = 0; j < cols; j++){
+            if(copy_matrix[i][j] == 0){
                 continue;
             }
-            this->matrix[i][j] *= -1;
+            copy_matrix[i][j] *= -1;
         }
       }
-      return *this;
+       return Matrix(convert_to_vector(copy_matrix, rows, cols), rows, cols);
 }
 
 bool Matrix::operator>(Matrix &m){
@@ -258,6 +260,9 @@ int main(){
     Matrix a(v1, 3 , 3);
     Matrix b(v2, 3 , 3);
     Matrix c(v3, 1, 9);
+    cout << -a;
+    cout << a;
+    cout << 3 * a; 
     cout << a;
     return 0;
 }

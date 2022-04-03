@@ -10,7 +10,6 @@ namespace zich{
         int cols;
 
         public:
-        // vector<double> convert_to_vector(vector<vector<double> > matrix , int rows, int cols);
         Matrix();
         Matrix(vector<double> v, int rows, int cols);
         Matrix operator+ (Matrix &m);
@@ -27,9 +26,9 @@ namespace zich{
         bool operator!=(Matrix &m);
         // friend Matrix operator- (Matrix &m, int num);
         // friend Matrix operator+ (Matrix &m, int num);
-        Matrix operator++ ();
+        Matrix operator++ ();  
         Matrix operator++ (int);
-        Matrix operator-- ();
+        Matrix operator-- (); 
         Matrix operator-- (int); 
         friend Matrix operator*(double num, Matrix &m);
         Matrix operator*(Matrix &m);
@@ -48,15 +47,15 @@ namespace zich{
          return output;
         }
 
-    //     friend Matrix operator*(double num, Matrix &m){
-    //     vector<vector<double> > copy_matrix = m.matrix;
-    //     for(int i = 0; i < m.rows; i++){
-    //     for(int j = 0; j < m.cols; j++){
-    //         copy_matrix[i][j] *= num;
-    //     }
-    // }
-    // return Matrix(convert_to_vector(copy_matrix, m.rows, m.cols), m.rows, m.cols);
-    // }
+        friend Matrix operator*(double num, Matrix &m){
+        Matrix mat = m; 
+        for(int i = 0; i < m.rows; i++){
+        for(int j = 0; j < m.cols; j++){
+            mat.matrix[i][j] *= num;
+        }
+    }
+    return mat;
+    }
 
     int getRows(){
         return rows;
