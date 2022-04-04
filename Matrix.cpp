@@ -26,6 +26,16 @@ Matrix::Matrix(vector<double> v, int rows, int cols){
     this->cols = cols;
 }
 
+// Matrix::Matrix(Matrix &other){
+//     for(int i = 0; i < rows; i++){
+//          for(int j = 0; j < cols; j++){
+//              this->matrix[i][j] = other.matrix[i][j];
+//          } 
+// }
+//   this->rows = other.rows;
+//     this->cols = other.cols;
+// }
+
 
 
 vector<double> convert_to_vector(vector<vector<double> > matrix , int rows, int cols){
@@ -71,13 +81,13 @@ Matrix Matrix::operator+(Matrix &m){
     if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
-    vector<vector<double> > copy_matrix = matrix;
+    Matrix mat(*this);
     for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
-                copy_matrix[i][j] += m.matrix[i][j];
+                mat.matrix[i][j] += m.matrix[i][j];
     }
 }
-    return Matrix(convert_to_vector(copy_matrix, rows, cols), rows, cols);
+return mat;
 }
 
 Matrix Matrix::operator+=(double num){
@@ -91,17 +101,17 @@ Matrix Matrix::operator+=(double num){
 
 
 Matrix Matrix::operator+(){ //unary plus????
-    vector<vector<double> > copy_matrix = matrix;
+   Matrix mat(*this);
    for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
-            if(copy_matrix[i][j] == 0){
+            if(mat.matrix[i][j] == 0){
                 continue;
             }
-           copy_matrix[i][j] = abs(copy_matrix[i][j]);
+           mat.matrix[i][j] = abs(mat.matrix[i][j]);
         }
       }
-     return Matrix(convert_to_vector(copy_matrix, rows, cols), rows, cols);
-}
+      return mat;
+    }
 
 Matrix operator+ (Matrix &m, int num){ //regular number addition
     return Matrix();
@@ -111,13 +121,13 @@ Matrix Matrix::operator- (Matrix &m){
       if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
-    vector<vector<double> > copy_matrix = matrix;
+    Matrix mat(*this);
     for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
-                copy_matrix[i][j] -= m.matrix[i][j];
+                mat.matrix[i][j] -= m.matrix[i][j];
     }
 }
-    return Matrix(convert_to_vector(copy_matrix, rows, cols), rows, cols);
+return mat;
 }
 Matrix Matrix::operator-= (double num){
       for(int i = 0; i < rows; i++){
@@ -132,16 +142,16 @@ Matrix operator- (Matrix &m, int num){ //regular number substraction
 }
 
 Matrix Matrix::operator- (){ //unary minus
-    vector<vector<double> > copy_matrix = matrix;
+    Matrix mat(*this);
       for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
-            if(copy_matrix[i][j] == 0){
+            if(mat.matrix[i][j] == 0){
                 continue;
             }
-            copy_matrix[i][j] *= -1;
+            mat.matrix[i][j] *= -1;
         }
       }
-       return Matrix(convert_to_vector(copy_matrix, rows, cols), rows, cols);
+ return mat;   
 }
 
 bool Matrix::operator>(Matrix &m){
@@ -260,9 +270,7 @@ int main(){
     Matrix a(v1, 3 , 3);
     Matrix b(v2, 3 , 3);
     Matrix c(v3, 1, 9);
-    cout << -a;
-    cout << a;
-    cout << 3 * a; 
+    cout << a - b;
     cout << a;
     return 0;
 }

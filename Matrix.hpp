@@ -12,6 +12,7 @@ namespace zich{
         public:
         Matrix();
         Matrix(vector<double> v, int rows, int cols);
+        // Matrix(Matrix &other);
         Matrix operator+ (Matrix &m);
         Matrix operator+= (double num);
         Matrix operator+ ();
@@ -48,7 +49,7 @@ namespace zich{
         }
 
         friend Matrix operator*(double num, Matrix &m){
-        Matrix mat = m; 
+        Matrix mat(m); 
         for(int i = 0; i < m.rows; i++){
         for(int j = 0; j < m.cols; j++){
             mat.matrix[i][j] *= num;
