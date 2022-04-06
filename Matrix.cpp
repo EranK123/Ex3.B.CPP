@@ -26,16 +26,12 @@ Matrix::Matrix(vector<double> v, int rows, int cols){
     this->cols = cols;
 }
 
+Matrix::Matrix(const Matrix &other){
+    this->matrix = other.matrix;
+    this->rows = other.rows;
+    this->cols = other.cols;
+}
 
-// vector<double> convert_to_vector(vector<vector<double> > matrix , int rows, int cols){
-//       vector<double> v;
-//       for(int i = 0; i < rows; i++){
-//          for(int j = 0; j < cols; j++){
-//              v.push_back(matrix[i][j]);
-//     }
-// }
-// return v;
-// }
 
 double sum_matrix(Matrix &m){
     double sum = 0;
@@ -198,7 +194,7 @@ bool Matrix::operator<(Matrix &m){
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
-     double sum1 = sum_matrix(*this);
+    double sum1 = sum_matrix(*this);
     double sum2 = sum_matrix(m);
     if(sum1 < sum2){
         return true;
@@ -306,7 +302,13 @@ Matrix Matrix::operator*=(double num){
              for(size_t i = 0; i < m.rows; i++){
                  output << "[";
                 for(size_t j = 0; j < m.cols; j++){
-                    output << m.matrix[i][j];         
+                    if(j == m.cols-1){
+                        output << m.matrix[i][j]; 
+                    }
+                    else{
+                        output << m.matrix[i][j] << " "; 
+                    }
+                            
         }
         cout << "]" << endl;
     }
@@ -316,15 +318,16 @@ Matrix Matrix::operator*=(double num){
 //     return input;
 // }
 
-// int main(){
-//     int arr1[] = {1, 0, 0, 0, 1, 0, 0, 0, 1};
-//     int arr2[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
-//     int arr3[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
-//     vector<double> v1(arr1, arr1+9);
-//     vector<double> v2(arr2, arr2 + 9);
-//     vector<double> v3(arr3, arr3 + 9);
-//     Matrix a(v1, 3 , 3);
-//     Matrix b(v2, 3 , 3);
-//     Matrix c(v3, 1, 9);
-//     return 0;
-// }
+int main(){
+    int arr1[] = {1, 0, 0, 0, 1, 0, 0, 0, 1};
+    int arr2[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
+    int arr3[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
+    vector<double> v1(arr1, arr1+9);
+    vector<double> v2(arr2, arr2 + 9);
+    vector<double> v3(arr3, arr3 + 9);
+    Matrix a(v1, 3 , 3);
+    Matrix b(v2, 3 , 3);
+    Matrix c(v3, 1, 9);
+    cout << a + b;
+    cout << a - b;
+}
