@@ -12,12 +12,13 @@ namespace zich{
         public:
         Matrix();
         Matrix(vector<double> v, int rows, int cols);
-        // Matrix(Matrix &other);
         Matrix operator+ (Matrix &m);
         Matrix operator+= (double num);
+        Matrix operator+= (Matrix &m);
         Matrix operator+ ();
         Matrix operator- (Matrix &m);
         Matrix operator-= (double num);
+        Matrix operator-= (Matrix &m);
         Matrix operator- ();
         bool operator>(Matrix &m);
         bool operator>=(Matrix &m);
@@ -37,26 +38,7 @@ namespace zich{
         friend ostream& operator<<(ostream& os, const Matrix &m);
         friend istream& operator>>(istream& input, Matrix &m);
         
-        friend ostream& operator<<(ostream& output, const Matrix &m){
-             for(int i = 0; i < m.rows; i++){
-                 output << "[";
-                for(int j = 0; j < m.cols; j++){
-                    output << m.matrix[i][j];         
-        }
-        cout << "]" << endl;
-    }
-         return output;
-        }
 
-        friend Matrix operator*(double num, Matrix &m){
-        Matrix mat(m); 
-        for(int i = 0; i < m.rows; i++){
-        for(int j = 0; j < m.cols; j++){
-            mat.matrix[i][j] *= num;
-        }
-    }
-    return mat;
-    }
 
     int getRows(){
         return rows;
