@@ -14,7 +14,7 @@ Matrix::Matrix(){
 }
 
 Matrix::Matrix(vector<double> v, int rows, int cols){
-    int k = 0;
+    size_t k = 0;
     for(int i = 0; i < rows; i++){
         vector<double> temp;
         for(int j = 0; j < cols; j++){
@@ -39,8 +39,8 @@ Matrix::Matrix(vector<double> v, int rows, int cols){
 
 double sum_matrix(Matrix &m){
     double sum = 0;
-     for(int i = 0; i < m.getRows(); i++){
-         for(int j = 0; j < m.getCols(); j++){
+     for(size_t i = 0; i < m.getRows(); i++){
+         for(size_t j = 0; j < m.getCols(); j++){
             sum += m.getMat()[i][j];
     }
 
@@ -49,8 +49,8 @@ return sum;
 }
 
 bool check_eq(Matrix &m1, Matrix &m2){
-       for(int i = 0; i < m1.getRows(); i++){
-         for(int j = 0; j < m1.getCols(); j++){
+       for(size_t i = 0; i < m1.getRows(); i++){
+         for(size_t j = 0; j < m1.getCols(); j++){
              if(m1.getMat()[i][j] != m2.getMat()[i][j]){
                 return false;
              }
@@ -71,8 +71,8 @@ Matrix Matrix::operator+(Matrix &m){
         throw std::invalid_argument("Must be same dimensions");
     }
     Matrix mat(*this);
-    for(int i = 0; i < rows; i++){
-            for(int j = 0; j < cols; j++){
+    for(size_t i = 0; i < rows; i++){
+            for(size_t j = 0; j < cols; j++){
                 mat.matrix[i][j] += m.matrix[i][j];
     }
 }
@@ -80,8 +80,8 @@ return mat;
 }
 
 Matrix Matrix::operator+=(double num){
-     for(int i = 0; i < rows; i++){
-                for(int j = 0; j < cols; j++){
+     for(size_t i = 0; i < rows; i++){
+                for(size_t j = 0; j < cols; j++){
                     this->matrix[i][j]+= num;
     }
 }
@@ -92,8 +92,8 @@ Matrix Matrix::operator+=(Matrix &m){
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
-    for(int i = 0; i < rows; i++){
-                for(int j = 0; j < cols; j++){
+    for(size_t i = 0; i < rows; i++){
+                for(size_t j = 0; j < cols; j++){
                     this->matrix[i][j] += m.matrix[i][j];
     }
 }
@@ -103,8 +103,8 @@ Matrix Matrix::operator+=(Matrix &m){
 
 Matrix Matrix::operator+(){ 
    Matrix mat(*this);
-   for(int i = 0; i < rows; i++){
-        for(int j = 0; j < cols; j++){
+   for(size_t i = 0; i < rows; i++){
+        for(size_t j = 0; j < cols; j++){
             if(mat.matrix[i][j] == 0){
                 continue;
             }
@@ -126,16 +126,16 @@ Matrix Matrix::operator- (Matrix &m){
         throw std::invalid_argument("Must be same dimensions");
     }
     Matrix mat(*this);
-    for(int i = 0; i < rows; i++){
-            for(int j = 0; j < cols; j++){
+    for(size_t i = 0; i < rows; i++){
+            for(size_t j = 0; j < cols; j++){
                 mat.matrix[i][j] -= m.matrix[i][j];
     }
 }
 return mat;
 }
 Matrix Matrix::operator-= (double num){
-      for(int i = 0; i < rows; i++){
-                for(int j = 0; j < cols; j++){
+      for(size_t i = 0; i < rows; i++){
+                for(size_t j = 0; j < cols; j++){
                     this->matrix[i][j] -= num;
     }
 }
@@ -146,8 +146,8 @@ Matrix Matrix::operator-= (Matrix &m){
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
-     for(int i = 0; i < rows; i++){
-                for(int j = 0; j < cols; j++){
+     for(size_t i = 0; i < rows; i++){
+                for(size_t j = 0; j < cols; j++){
                     this->matrix[i][j] -= m.matrix[i][j];
     }
 }
@@ -160,8 +160,8 @@ Matrix operator- (Matrix &m, int num){ //regular number substraction
 
 Matrix Matrix::operator- (){ //unary minus
     Matrix mat(*this);
-      for(int i = 0; i < rows; i++){
-        for(int j = 0; j < cols; j++){
+      for(size_t i = 0; i < rows; i++){
+        for(size_t j = 0; j < cols; j++){
             if(mat.matrix[i][j] == 0){
                 continue;
             }
@@ -232,8 +232,8 @@ bool Matrix::operator!=(Matrix &m){
 }
 
 Matrix Matrix::operator++ (){
-     for(int i = 0; i < this->rows; i++){
-        for(int j = 0; j < this->cols; j++){
+     for(size_t i = 0; i < this->rows; i++){
+        for(size_t j = 0; j < this->cols; j++){
             this->matrix[i][j] += 1;
         }
 }
@@ -242,16 +242,16 @@ return *this;
 
 Matrix Matrix::operator++ (int){
     Matrix temp = *this;
-       for(int i = 0; i < this->rows; i++){
-        for(int j = 0; j < this->cols; j++){
+       for(size_t i = 0; i < this->rows; i++){
+        for(size_t j = 0; j < this->cols; j++){
             this->matrix[i][j] += 1;
         }
 }
 return temp;
 }
 Matrix Matrix::operator-- (){
-      for(int i = 0; i < this->rows; i++){
-        for(int j = 0; j < this->cols; j++){
+      for(size_t i = 0; i < this->rows; i++){
+        for(size_t j = 0; j < this->cols; j++){
             this->matrix[i][j] -= 1;
         }
 }
@@ -259,8 +259,8 @@ return *this;
 }
 Matrix Matrix::operator-- (int){
       Matrix temp = *this;
-       for(int i = 0; i < this->rows; i++){
-        for(int j = 0; j < this->cols; j++){
+       for(size_t i = 0; i < this->rows; i++){
+        for(size_t j = 0; j < this->cols; j++){
             this->matrix[i][j] -= 1;
         }
 }
@@ -271,12 +271,12 @@ Matrix Matrix::operator*(Matrix &m){
     if(cols != m.rows){
         throw std::invalid_argument("Cols and Rows must be the same"); 
     }
-    vector<double> v (m.cols, 0);
+    vector<double> v (size_t(m.cols), 0);
     Matrix result(v, rows, m.cols);
-    for(int i = 0; i < rows; i++){
-        for(int j = 0; j < m.cols; j++){
+    for(size_t i = 0; i < rows; i++){
+        for(size_t j = 0; j < m.cols; j++){
             result.matrix[i][j] = 0;
-            for(int k = 0; k < m.rows; k++){
+            for(size_t k = 0; k < m.rows; k++){
                  result.matrix[i][j] += matrix[i][k] * m.matrix[k][j];
             }
         }
@@ -284,8 +284,8 @@ Matrix Matrix::operator*(Matrix &m){
     return result;
 }
 Matrix Matrix::operator*=(double num){
-    for(int i = 0; i < this->rows; i++){
-        for(int j = 0; j < this->cols; j++){
+    for(size_t i = 0; i < this->rows; i++){
+        for(size_t j = 0; j < this->cols; j++){
             this->matrix[i][j] *= num;
         }
     }
@@ -294,8 +294,8 @@ Matrix Matrix::operator*=(double num){
  
     zich::Matrix zich::operator*(double num, Matrix &m){
         Matrix mat(m); 
-        for(int i = 0; i < m.rows; i++){
-        for(int j = 0; j < m.cols; j++){
+        for(size_t i = 0; i < m.rows; i++){
+        for(size_t j = 0; j < m.cols; j++){
             mat.matrix[i][j] *= num;
         }
     }
@@ -303,9 +303,9 @@ Matrix Matrix::operator*=(double num){
     }
 
     ostream& zich::operator<<(ostream& output, const Matrix &m){
-             for(int i = 0; i < m.rows; i++){
+             for(size_t i = 0; i < m.rows; i++){
                  output << "[";
-                for(int j = 0; j < m.cols; j++){
+                for(size_t j = 0; j < m.cols; j++){
                     output << m.matrix[i][j];         
         }
         cout << "]" << endl;
@@ -316,15 +316,15 @@ Matrix Matrix::operator*=(double num){
 //     return input;
 // }
 
-int main(){
-    int arr1[] = {1, 0, 0, 0, 1, 0, 0, 0, 1};
-    int arr2[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
-    int arr3[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
-    vector<double> v1(arr1, arr1+9);
-    vector<double> v2(arr2, arr2 + 9);
-    vector<double> v3(arr3, arr3 + 9);
-    Matrix a(v1, 3 , 3);
-    Matrix b(v2, 3 , 3);
-    Matrix c(v3, 1, 9);
-    return 0;
-}
+// int main(){
+//     int arr1[] = {1, 0, 0, 0, 1, 0, 0, 0, 1};
+//     int arr2[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
+//     int arr3[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
+//     vector<double> v1(arr1, arr1+9);
+//     vector<double> v2(arr2, arr2 + 9);
+//     vector<double> v3(arr3, arr3 + 9);
+//     Matrix a(v1, 3 , 3);
+//     Matrix b(v2, 3 , 3);
+//     Matrix c(v3, 1, 9);
+//     return 0;
+// }

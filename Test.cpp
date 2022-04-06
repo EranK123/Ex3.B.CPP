@@ -22,9 +22,7 @@ TEST_CASE("Case: Invalid multiplication and amount"){
     Matrix mat3(identity_4,4,4);
     Matrix mat4_arr(arr,3,3);
     CHECK_THROWS((mat2*mat1));
-    CHECK_THROWS(mat2*=mat1);
     CHECK_THROWS(mat3*mat2);
-    CHECK_THROWS(mat3*=mat2);
     CHECK_THROWS(mat2*mat2);
     CHECK_THROWS(mat4_arr*mat3);
     CHECK_THROWS(mat2*mat4_arr);
