@@ -326,8 +326,7 @@ int main(){
     vector<double> v2(arr2, arr2 + 9);
     vector<double> v3(arr3, arr3 + 9);
     Matrix a(v1, 3 , 3);
-    Matrix b(v2, 3 , 3);
+    Matrix b(v2, 9 , 1);
     Matrix c(v3, 1, 9);
-    cout << a + b;
-    cout << a - b;
+    cout << b * c;
 }
