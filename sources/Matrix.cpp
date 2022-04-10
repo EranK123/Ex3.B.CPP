@@ -52,7 +52,10 @@ bool check_eq(const Matrix &m1,const  Matrix &m2){
 }
 
 bool check_sizes(const Matrix &m1,const Matrix &m2){
-    return (m1.getCols() != m2.getCols() || m1.getRows() != m2.getRows());
+    if (m1.getCols() != m2.getCols() || m1.getRows() != m2.getRows()){
+        return false;
+    }
+    return true;
 }
 
 Matrix Matrix::operator+(const Matrix &m){
@@ -245,7 +248,7 @@ return temp;
 }
 
 Matrix Matrix::operator*(const Matrix &m){
-    if(cols != m.rows){
+    if(this->cols != m.rows){
         throw std::invalid_argument("Cols and Rows must be the same"); 
     }
     vector<double> v (size_t(m.cols), 0);
@@ -268,8 +271,27 @@ Matrix Matrix::operator*=(double num){
     }
     return *this;
 }
+
+Matrix Matrix::operator*=(const Matrix &m){
+    for(size_t i = 0; i < this->rows; i++){
+        for(size_t j = 0; j < this->cols; j++){
+            this->matrix[i][j] *= m.matrix[i][j];
+        }
+    }
+    return *this;
+}
  
-    zich::Matrix zich::operator*(double num, const Matrix &m){
+zich::Matrix zich::operator*(double num, const Matrix &m){
+        Matrix mat(m); 
+        for(size_t i = 0; i < m.rows; i++){
+        for(size_t j = 0; j < m.cols; j++){
+            mat.matrix[i][j] *= num;
+        }
+    }
+    return mat;
+    }
+
+zich::Matrix zich::operator*(const Matrix &m, double num){
         Matrix mat(m); 
         for(size_t i = 0; i < m.rows; i++){
         for(size_t j = 0; j < m.cols; j++){
@@ -300,15 +322,23 @@ istream& operator>>(istream &input, Matrix &m){
 }
 
 // int main(){
-//     int arr1[] = {1, 0, 0, 0, 1, 0, 0, 0, 1};
-//     int arr2[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
-//     int arr3[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
-//     vector<double> v1(arr1, arr1+9);
-//     vector<double> v2(arr2, arr2 + 9);
-//     vector<double> v3(arr3, arr3 + 9);
-//     Matrix a(v1, 3 , 3);
-//     Matrix b(v2, 3 , 3);
-//     Matrix c(v3, 1, 9);
-//     cout <<  -b;
-//     cout << b;
+//      vector<double> identity_3 = {1,0,0,0,1,0,0,0,1};//3x3
+//     vector<double> vec1 = {1,1,1,1,1,1,1,1,1};//3x3
+//     vector<double> arr = {2,1,1,1,2,1,1,1,2};//3x3   arr = identity_3 + vec1
+//     vector<double> vec2 = {1,0,0,0,0,1,0,0,0,0,1,0};//3x4
+//     vector<double> identity_4 = {1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1};//4x4
+//     Matrix mat1(identity_3,3,3);
+//     Matrix mat2(vec2,3,4);
+//     Matrix mat3(identity_4,4,4);
+//     Matrix mat4_arr(arr,3,3);
+//      for (double i = 0; i < 500; i++)
+//     {
+//     vector<double> arr1 = {i, i+1, i+2, i+3};//2x2
+//     vector<double> arr2 = {i,i,i,i,i,i,i,i,i};//3x3
+//     vector<double> arr = {i};//1x1
+//     Matrix mat1(arr1,2,2);
+//     Matrix mat2(arr2,3,3);
+//     Matrix mat(arr,1,1);
+//     mat1+mat2;    
+// }
 // }

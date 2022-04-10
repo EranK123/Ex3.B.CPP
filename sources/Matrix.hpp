@@ -33,8 +33,10 @@ namespace zich{
         Matrix operator-- (); 
         Matrix operator-- (int); 
         friend Matrix operator*(double num, const Matrix &m);
+        friend Matrix operator*(const Matrix &m, double num);
         Matrix operator*(const Matrix &m);
         Matrix operator*=(double num);
+        Matrix operator*=(const Matrix &m);
         friend ostream& operator<<(ostream& output, const Matrix &m);
         friend istream& operator>>(istream& input, Matrix &m);
         
