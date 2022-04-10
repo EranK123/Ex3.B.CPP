@@ -10,6 +10,10 @@ using namespace zich;
 using namespace std;
 
 Matrix::Matrix(vector<double> v, int rows, int cols){
+    if(rows < 0 || cols < 0 || rows == 0 || cols == 0 || rows * cols != v.size()){
+        throw std::invalid_argument("Cant have negative values or zero");
+    }
+    int size = 0;
     size_t k = 0;
     for(int i = 0; i < rows; i++){
         vector<double> temp;
@@ -251,7 +255,7 @@ Matrix Matrix::operator*(const Matrix &m){
     if(this->cols != m.rows){
         throw std::invalid_argument("Cols and Rows must be the same"); 
     }
-    vector<double> v (size_t(m.cols), 0);
+    vector<double> v (size_t(m.cols * this->rows), 0);
     Matrix result(v, rows, m.cols);
     for(size_t i = 0; i < rows; i++){
         for(size_t j = 0; j < m.cols; j++){
@@ -273,11 +277,20 @@ Matrix Matrix::operator*=(double num){
 }
 
 Matrix Matrix::operator*=(const Matrix &m){
-    for(size_t i = 0; i < this->rows; i++){
-        for(size_t j = 0; j < this->cols; j++){
-            this->matrix[i][j] *= m.matrix[i][j];
+      if(this->cols != m.rows){
+        throw std::invalid_argument("Must be same dimensions");
+      }
+    vector<double> v (size_t(m.cols * rows), 0);
+    Matrix result(v, rows, m.cols);
+    for(size_t i = 0; i < rows; i++){
+        for(size_t j = 0; j < m.cols; j++){
+            result.matrix[i][j] = 0;
+            for(size_t k = 0; k < m.rows; k++){
+                 result.matrix[i][j] += matrix[i][k] * m.matrix[k][j];
+            }
         }
     }
+    *this = result;
     return *this;
 }
  
@@ -322,23 +335,12 @@ istream& operator>>(istream &input, Matrix &m){
 }
 
 // int main(){
-//      vector<double> identity_3 = {1,0,0,0,1,0,0,0,1};//3x3
-//     vector<double> vec1 = {1,1,1,1,1,1,1,1,1};//3x3
-//     vector<double> arr = {2,1,1,1,2,1,1,1,2};//3x3   arr = identity_3 + vec1
-//     vector<double> vec2 = {1,0,0,0,0,1,0,0,0,0,1,0};//3x4
-//     vector<double> identity_4 = {1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1};//4x4
-//     Matrix mat1(identity_3,3,3);
-//     Matrix mat2(vec2,3,4);
-//     Matrix mat3(identity_4,4,4);
-//     Matrix mat4_arr(arr,3,3);
-//      for (double i = 0; i < 500; i++)
-//     {
-//     vector<double> arr1 = {i, i+1, i+2, i+3};//2x2
-//     vector<double> arr2 = {i,i,i,i,i,i,i,i,i};//3x3
-//     vector<double> arr = {i};//1x1
-//     Matrix mat1(arr1,2,2);
-//     Matrix mat2(arr2,3,3);
-//     Matrix mat(arr,1,1);
-//     mat1+mat2;    
-// }
+//       vector<double> v1 = {1, 1, 1, 2, 2, 2};
+//       vector<double> v2 = {1, 1, 1, 2, 2, 2};
+//       Matrix m1(v1,3, 2);
+//       Matrix m2(v2,2, 3);
+//       cout << m1 * m2;
+//       m1*=m2;
+//       cout << m1;
+
 // }
