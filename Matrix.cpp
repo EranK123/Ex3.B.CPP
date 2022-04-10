@@ -33,7 +33,7 @@ Matrix::Matrix(const Matrix &other){
 }
 
 
-double sum_matrix(Matrix &m){
+double sum_matrix(const Matrix &m){
     double sum = 0;
      for(size_t i = 0; i < m.getRows(); i++){
          for(size_t j = 0; j < m.getCols(); j++){
@@ -44,7 +44,7 @@ double sum_matrix(Matrix &m){
 return sum;
 }
 
-bool check_eq(Matrix &m1, Matrix &m2){
+bool check_eq(const Matrix &m1,const  Matrix &m2){
        for(size_t i = 0; i < m1.getRows(); i++){
          for(size_t j = 0; j < m1.getCols(); j++){
              if(m1.getMat()[i][j] != m2.getMat()[i][j]){
@@ -55,14 +55,14 @@ bool check_eq(Matrix &m1, Matrix &m2){
  return true;
 }
 
-bool check_sizes(Matrix &m1, Matrix &m2){
+bool check_sizes(const Matrix &m1,const Matrix &m2){
     if(m1.getCols() != m2.getCols() || m1.getRows() != m2.getRows()){
         return false;
     }
     return true;
 }
 
-Matrix Matrix::operator+(Matrix &m){
+Matrix Matrix::operator+(const Matrix &m){
     if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
@@ -84,7 +84,7 @@ Matrix Matrix::operator+=(double num){
     return *this;
 }
 
-Matrix Matrix::operator+=(Matrix &m){
+Matrix Matrix::operator+=(const Matrix &m){
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
@@ -110,11 +110,11 @@ Matrix Matrix::operator+(){
       return mat;
     }
 
-Matrix operator+ (Matrix &m, int num){ //regular number addition
+Matrix operator+ (const Matrix &m, int num){ //regular number addition
     return Matrix();
 }
 
-Matrix Matrix::operator- (Matrix &m){
+Matrix Matrix::operator- (const Matrix &m){
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
@@ -138,7 +138,7 @@ Matrix Matrix::operator-= (double num){
     return *this;
 }
 
-Matrix Matrix::operator-= (Matrix &m){
+Matrix Matrix::operator-= (const Matrix &m){
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
@@ -167,7 +167,7 @@ Matrix Matrix::operator- (){ //unary minus
  return mat;   
 }
 
-bool Matrix::operator>(Matrix &m){
+bool Matrix::operator>(const Matrix &m){
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
@@ -178,7 +178,7 @@ bool Matrix::operator>(Matrix &m){
     }
     return false;
   }
-bool Matrix::operator>=(Matrix &m){
+bool Matrix::operator>=(const Matrix &m){
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
@@ -190,7 +190,7 @@ bool Matrix::operator>=(Matrix &m){
     return false;
   }
 
-bool Matrix::operator<(Matrix &m){
+bool Matrix::operator<(const Matrix &m){
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
@@ -201,7 +201,7 @@ bool Matrix::operator<(Matrix &m){
     }
     return false;
 }
-bool Matrix::operator<=(Matrix &m){
+bool Matrix::operator<=(const Matrix &m){
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
@@ -213,14 +213,14 @@ bool Matrix::operator<=(Matrix &m){
     return false;
 }
 
-bool Matrix::operator==(Matrix &m){
+bool Matrix::operator==(const Matrix &m){
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
     return check_eq(*this, m); 
 }
 
-bool Matrix::operator!=(Matrix &m){
+bool Matrix::operator!=(const Matrix &m){
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
@@ -263,7 +263,7 @@ Matrix Matrix::operator-- (int){
 return temp;
 }
 
-Matrix Matrix::operator*(Matrix &m){
+Matrix Matrix::operator*(const Matrix &m){
     if(cols != m.rows){
         throw std::invalid_argument("Cols and Rows must be the same"); 
     }
@@ -288,7 +288,7 @@ Matrix Matrix::operator*=(double num){
     return *this;
 }
  
-    zich::Matrix zich::operator*(double num, Matrix &m){
+    zich::Matrix zich::operator*(double num, const Matrix &m){
         Matrix mat(m); 
         for(size_t i = 0; i < m.rows; i++){
         for(size_t j = 0; j < m.cols; j++){
@@ -310,13 +310,13 @@ Matrix Matrix::operator*=(double num){
                     }
                             
         }
-        cout << "]" << endl;
+        cout << "]" << '\n';
     }
          return output;
         }
-// istream& operator>>(istream  &input, Matrix &m){
-//     return input;
-// }
+istream& operator>>(istream &input, Matrix &m){
+    return input;
+}
 
 int main(){
     int arr1[] = {1, 0, 0, 0, 1, 0, 0, 0, 1};
@@ -326,7 +326,8 @@ int main(){
     vector<double> v2(arr2, arr2 + 9);
     vector<double> v3(arr3, arr3 + 9);
     Matrix a(v1, 3 , 3);
-    Matrix b(v2, 9 , 1);
+    Matrix b(v2, 3 , 3);
     Matrix c(v3, 1, 9);
-    cout << b * c;
+    cout <<  -b;
+    cout << b;
 }
