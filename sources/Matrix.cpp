@@ -18,7 +18,8 @@ Matrix::Matrix(vector<double> v, int rows, int cols){
     for(int i = 0; i < rows; i++){
         vector<double> temp;
         for(int j = 0; j < cols; j++){
-            temp.push_back(v[k++]);
+            temp.push_back(v[k]);
+            k++;
         }
         this->matrix.push_back(temp);
     }
@@ -55,11 +56,15 @@ bool check_eq(const Matrix &m1,const  Matrix &m2){
  return true;
 }
 
+// bool check_sizes(const Matrix &m1,const Matrix &m2){
+//     if (m1.getCols() != m2.getCols() || m1.getRows() != m2.getRows()){
+//         return false;
+//     }
+//     return true;
+// }
+
 bool check_sizes(const Matrix &m1,const Matrix &m2){
-    if (m1.getCols() != m2.getCols() || m1.getRows() != m2.getRows()){
-        return false;
-    }
-    return true;
+   return !(m1.getCols() != m2.getCols() || m1.getRows() != m2.getRows());
 }
 
 Matrix Matrix::operator+(const Matrix &m){
@@ -318,29 +323,33 @@ zich::Matrix zich::operator*(const Matrix &m, double num){
              for(size_t i = 0; i < m.rows; i++){
                  output << "[";
                 for(size_t j = 0; j < m.cols; j++){
-                    if(j == m.cols-1){
+                    if(j == m.cols - 1){
                         output << m.matrix[i][j]; 
                     }
                     else{
                         output << m.matrix[i][j] << " "; 
-                    }
-                            
+                    }            
         }
-        cout << "]" << '\n';
-    }
+        if(i != m.rows -1){
+        output << "]" << '\n';
+        }else{
+             output << "]";
+        }
+        }
          return output;
         }
-istream& operator>>(istream &input, Matrix &m){
+istream& zich::operator>>(istream &input, Matrix &m){
     return input;
 }
 
 // int main(){
-//       vector<double> v1 = {1, 1, 1, 2, 2, 2};
+//       vector<double> v1 = {1, 0 , 0, 0, 1, 0, 0 , 0, 1};
 //       vector<double> v2 = {1, 1, 1, 2, 2, 2};
-//       Matrix m1(v1,3, 2);
+//       Matrix m1(v1,3, 3);
 //       Matrix m2(v2,2, 3);
-//       cout << m1 * m2;
-//       m1*=m2;
 //       cout << m1;
+//     ostringstream os1;
+//     os1 << m1;
+//     cout << os1.str();
 
 // }
