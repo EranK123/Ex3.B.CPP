@@ -9,10 +9,6 @@
 using namespace zich;
 using namespace std;
 
-Matrix::Matrix(){
-
-}
-
 Matrix::Matrix(vector<double> v, int rows, int cols){
     size_t k = 0;
     for(int i = 0; i < rows; i++){
@@ -56,10 +52,7 @@ bool check_eq(const Matrix &m1,const  Matrix &m2){
 }
 
 bool check_sizes(const Matrix &m1,const Matrix &m2){
-    if(m1.getCols() != m2.getCols() || m1.getRows() != m2.getRows()){
-        return false;
-    }
-    return true;
+    return (m1.getCols() != m2.getCols() || m1.getRows() != m2.getRows());
 }
 
 Matrix Matrix::operator+(const Matrix &m){
@@ -110,9 +103,9 @@ Matrix Matrix::operator+(){
       return mat;
     }
 
-Matrix operator+ (const Matrix &m, int num){ //regular number addition
-    return Matrix();
-}
+// Matrix operator+ (const Matrix &m, int num){ //regular number addition
+//     return Matrix();
+// }
 
 Matrix Matrix::operator- (const Matrix &m){
      if(!check_sizes(*this, m)){
@@ -150,9 +143,9 @@ Matrix Matrix::operator-= (const Matrix &m){
     return *this;
 }
 
-Matrix operator- (Matrix &m, int num){ //regular number substraction
-    return Matrix();
-}
+// Matrix operator- (Matrix &m, int num){ //regular number substraction
+//     return Matrix();
+// }
 
 Matrix Matrix::operator- (){ //unary minus
     Matrix mat(*this);
@@ -167,60 +160,48 @@ Matrix Matrix::operator- (){ //unary minus
  return mat;   
 }
 
-bool Matrix::operator>(const Matrix &m){
+bool Matrix::operator>(const Matrix &m) const{
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
     double sum1 = sum_matrix(*this);
     double sum2 = sum_matrix(m);
-    if(sum1 > sum2){
-        return true;
-    }
-    return false;
-  }
-bool Matrix::operator>=(const Matrix &m){
+    return (sum1 > sum2);
+}
+bool Matrix::operator>=(const Matrix &m) const{
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
     double sum1 = sum_matrix(*this);
     double sum2 = sum_matrix(m);
-    if(sum1 >= sum2){
-        return true;
-    }
-    return false;
+    return(sum1 >= sum2);
   }
 
-bool Matrix::operator<(const Matrix &m){
+bool Matrix::operator<(const Matrix &m) const{
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
     double sum1 = sum_matrix(*this);
     double sum2 = sum_matrix(m);
-    if(sum1 < sum2){
-        return true;
-    }
-    return false;
+    return(sum1 < sum2);
 }
-bool Matrix::operator<=(const Matrix &m){
+bool Matrix::operator<=(const Matrix &m) const{
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
     double sum1 = sum_matrix(*this);
     double sum2 = sum_matrix(m);
-    if(sum1 <= sum2){
-        return true;
-    }
-    return false;
+    return(sum1 <= sum2);
 }
 
-bool Matrix::operator==(const Matrix &m){
+bool Matrix::operator==(const Matrix &m) const{
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
     return check_eq(*this, m); 
 }
 
-bool Matrix::operator!=(const Matrix &m){
+bool Matrix::operator!=(const Matrix &m) const{
      if(!check_sizes(*this, m)){
         throw std::invalid_argument("Must be same dimensions");
     }
@@ -318,16 +299,16 @@ istream& operator>>(istream &input, Matrix &m){
     return input;
 }
 
-int main(){
-    int arr1[] = {1, 0, 0, 0, 1, 0, 0, 0, 1};
-    int arr2[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
-    int arr3[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
-    vector<double> v1(arr1, arr1+9);
-    vector<double> v2(arr2, arr2 + 9);
-    vector<double> v3(arr3, arr3 + 9);
-    Matrix a(v1, 3 , 3);
-    Matrix b(v2, 3 , 3);
-    Matrix c(v3, 1, 9);
-    cout <<  -b;
-    cout << b;
-}
+// int main(){
+//     int arr1[] = {1, 0, 0, 0, 1, 0, 0, 0, 1};
+//     int arr2[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
+//     int arr3[]= {3, 0, 0, 0, 3, 0, 0, 0, 3};
+//     vector<double> v1(arr1, arr1+9);
+//     vector<double> v2(arr2, arr2 + 9);
+//     vector<double> v3(arr3, arr3 + 9);
+//     Matrix a(v1, 3 , 3);
+//     Matrix b(v2, 3 , 3);
+//     Matrix c(v3, 1, 9);
+//     cout <<  -b;
+//     cout << b;
+// }

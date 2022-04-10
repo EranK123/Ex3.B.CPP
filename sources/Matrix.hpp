@@ -10,7 +10,6 @@ namespace zich{
         int cols;
 
         public:
-        Matrix();
         Matrix(vector<double> v, int rows, int cols);
         Matrix(const Matrix &other);
         Matrix operator+ (const Matrix &m);
@@ -21,12 +20,12 @@ namespace zich{
         Matrix operator-= (double num);
         Matrix operator-= (const Matrix &m);
         Matrix operator- ();
-        bool operator>(const Matrix &m);
-        bool operator>=(const Matrix &m);
-        bool operator<(const Matrix &m);
-        bool operator<=(const Matrix &m);
-        bool operator==(const Matrix &m);
-        bool operator!=(const Matrix &m);
+        bool operator>(const Matrix &m) const;
+        bool operator>=(const Matrix &m) const;
+        bool operator<(const Matrix &m) const;
+        bool operator<=(const Matrix &m) const;
+        bool operator==(const Matrix &m) const;
+        bool operator!=(const Matrix &m) const;
         // friend Matrix operator- (Matrix &m, int num);
         // friend Matrix operator+ (Matrix &m, int num);
         Matrix operator++ ();  
@@ -36,7 +35,7 @@ namespace zich{
         friend Matrix operator*(double num, const Matrix &m);
         Matrix operator*(const Matrix &m);
         Matrix operator*=(double num);
-        friend ostream& operator<<(ostream& os, const Matrix &m);
+        friend ostream& operator<<(ostream& output, const Matrix &m);
         friend istream& operator>>(istream& input, Matrix &m);
         
 
