@@ -6,9 +6,11 @@
 #include <sstream>
 #include <string>
 #include <cstdlib>
+#include <chrono>
+#include <thread>
 using namespace zich;
 using namespace std;
-
+const int four8 = 48;
 Matrix::Matrix(vector<double> v, int rows, int cols){
     if(rows < 0 || cols < 0 || rows == 0 || cols == 0 || rows * cols != v.size()){
         throw std::invalid_argument("Cant have negative values or zero");
@@ -338,18 +340,61 @@ zich::Matrix zich::operator*(const Matrix &m, double num){
         }
          return output;
         }
+
 istream& zich::operator>>(istream &input, Matrix &m){
-    return input;
-}
+     string s;
+    vector<double> v;
+     int rowCount = 0;
+    int colCount = 0;
+     int prev_length = 0;
+     int curr_length = 0;
+     int i = 0;
+    while (getline(input, s, ',')){
+      
+        curr_length = s.length();
+          if(prev_length == curr_length){
+              throw std::invalid_argument("BAD");
+        }
+        if(prev_length != curr_length){
+            prev_length = curr_length;
+        }
+        colCount = 0; 
+        rowCount++;
+        cout << s;
+        cout << s.length() << endl;
+        for(size_t i = 0; i < s.length() - 1; i++){
+            // cout << s.at(i);
+            if((s.at(i) == '[' && s.at(i + 1) == ' ')){
+                 throw std::invalid_argument("BAD");
+            }
+        }
+        for(size_t i = 0; i < s.length(); i++){
+         if (s.at(i) != ' ' && s.at(i) != ',' && s.at(i) != '\n' && s.at(i) != '[' && s.at(i) != ']'){
+             v.push_back(s.at(i) - '0');
+         }
+     }
+     size_t i = 0;
+     while (i < s.length()){
+         if(s.at(i) != ' ' && s.at(i) != ',' && s.at(i) != '\n' && s.at(i) != '[' && s.at(i) != ']'){
+          colCount++;
+         }
+         i++;
+      }
+    } 
+      m = Matrix(v, rowCount, colCount);
+      return input;
+    
+      }
+      
+
 
 // int main(){
-//       vector<double> v1 = {1, 0 , 0, 0, 1, 0, 0 , 0, 1};
-//       vector<double> v2 = {1, 1, 1, 2, 2, 2};
-//       Matrix m1(v1,3, 3);
-//       Matrix m2(v2,2, 3);
-//       cout << m1;
-//     ostringstream os1;
-//     os1 << m1;
-//     cout << os1.str();
+//     std::vector<double> identity = {1, 0, 0, 0, 1, 0, 0, 0, 1};
+//     Matrix mat1{identity,3,3};
+//     istringstream is1{"[1 1 1 1],[1 1 1 1], [1 1 1 1]\n"};
+//     (is1 >> mat1);
+//     // istringstream is7{"[1 1 1 1], [1 1 1 1], [1 1 1 1]\n"};
+//     // (is7 >> mat1);
+
 
 // }
